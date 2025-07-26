@@ -49,8 +49,12 @@ https://huggingface.co/gpustack/bge-m3-GGUF
 
 # Cách sử dụng
 
-### Install `just`
+### Bước 1. Install `just`
 ```bash
 curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 ```
 
+### Bước 2. Start server
+```bash
+just start
+```
