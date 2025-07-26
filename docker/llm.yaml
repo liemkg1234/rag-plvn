@@ -1,0 +1,29 @@
+logLevel: debug
+startPort: 8001
+
+models:
+  "bge-m3":
+    cmd: |
+      /app/llama-server --port ${PORT}
+      --model /models/bge-m3-Q6_K.gguf
+      --n-gpu-layers 95 \
+      --flash-attn \
+      --ctx-size 8192 \
+      --parallel 4 \
+      --cont-batching \
+      --batch-size 8192 \
+      --ubatch-size 4096 \
+      --verbose \
+      --embeddings
+    ttl: 360
+    checkEndpoint: /health
+
+  "bge-reranker":
+    cmd: |
+      /app/llama-server --port ${PORT}
+      --model /models/bge-reranker-v2-m3-Q6_K.gguf \
+      --n-gpu-layers 95 \
+      --flash-attn \
+      --reranking
+    ttl: 360
+    checkEndpoint: /health

@@ -1,0 +1,97 @@
+version: "3.11"
+
+services:
+  ai:
+    image: ghcr.io/mostlygeek/llama-swap:cuda
+    container_name: ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./llm.yaml:/app/config.yaml
+      - ./volumes/models:/models
+    command: [ "--config=/app/config.yaml", "--listen", ":8000"]
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health/liveliness || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - rag
+
+  # Document Parser
+  doc-parser:
+    image: ghcr.io/docling-project/docling-serve-cpu:main
+    container_name: doc-parser
+    ports:
+      - "9999:8000"
+    environment:
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
+      - NUM_WORKERS=2
+      - DOCLING_SERVE_ENABLE_UI=true
+    restart: always
+    networks:
+      - rag
+
+  # Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+    expose:
+      - 6333
+      - 6334
+      - 6335
+    configs:
+      - source: qdrant_config
+        target: /qdrant/config/production.yaml
+    volumes:
+      - ./volumes/qdrant:/qdrant/storage
+    restart: always
+    networks:
+      - rag
+
+  rag-be:
+    build: ../app/rag-be
+    container_name: rag-be
+    ports:
+      - "8001:8000"
+    env_file:
+      - ../.env
+    environment:
+      - 'PYTHON-UNBUFFERED=1'
+    restart: unless-stopped
+    networks:
+      - rag
+
+  rag-ui:
+    build:
+      context: ../app/rag-ui
+    container_name: rag-ui
+    env_file:
+      - ../.env
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - rag
+
+# === Network ===
+networks:
+  rag:
+    name: rag
+    driver: bridge
+
+configs:
+  qdrant_config:
+    content: |
+      log_level: INFO

@@ -1,0 +1,24 @@
+[project]
+name = "rag-poc"
+version = "0.1.0"
+description = "RAG POC Project: Create embedding text & image, or building knowledge graphs"
+readme = "README.md"
+authors = [
+  { name = "liemkg1234" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "mypy>=1.15.0",
+    "pre-commit>=4.1.0",
+    "pytest>=8.3.4",
+    "ruff>=0.9.5",
+    "isort>=5.13.2",
+]
+
+[dependency-groups]
+# Text Embedding
+text_embedding = [
+    "cocoindex",
+    "litellm",
+    "backoff",
+]

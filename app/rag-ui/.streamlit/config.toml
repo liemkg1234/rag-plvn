@@ -1,0 +1,12 @@
+[server]
+#headless = true
+#port = 8501
+#enableCORS = false
+
+#[logger]
+#level = "debug"
+#messageFormat = "%(asctime)s - %(levelname)s - %(message)s"
+
+#[theme]
+#base="dark"
+#primaryColor="#00FFAA"
