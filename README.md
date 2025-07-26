@@ -17,6 +17,9 @@
     - File test: test/test.py
 
 ## Bước 3. Triển khai API 
+
+- API
+
 ```bash
 curl -X 'POST' \
   'http://localhost:8001/rag/retriever' \
@@ -29,6 +32,8 @@ curl -X 'POST' \
   ]
 }'
 ```
+- Demo Test: images/RAG_PLVN.mp4
+
 
 # Thông tin thêm
 ## Port Public
