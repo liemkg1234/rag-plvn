@@ -34,19 +34,6 @@ curl -X 'POST' \
 ```
 - Demo Test: images/RAG_PLVN.mp4
 
-
-# Thông tin thêm
-## Port Public
-- Embedding Server: http://localhost:8000
-- Document Parsing Server: http://localhost:9999/ui/
-- Qdrant Server: http://localhost:6333/dashboard#/collections
-- Rag-Backend: http://localhost:8001/docs
-- Rag-UI: http://localhost:3000
-
-## Model sử dụng:
-https://huggingface.co/gpustack/bge-m3-GGUF
-
-
 # Cách sử dụng
 
 ### Bước 1. Install `just`
@@ -58,3 +45,15 @@ curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 ```bash
 just start
 ```
+
+
+# Thông tin thêm
+## Port Public
+- Embedding Server: http://localhost:8000
+- Document Parsing Server: http://localhost:9999/ui/
+- Qdrant Server: http://localhost:6333/dashboard#/collections
+- Rag-Backend: http://localhost:8001/docs
+- Rag-UI: http://localhost:3000
+
+## Model sử dụng:
+https://huggingface.co/gpustack/bge-m3-GGUF
