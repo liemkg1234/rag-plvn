@@ -33,6 +33,7 @@ curl -X 'POST' \
 }'
 ```
 - Demo Test: images/RAG_PLVN.mp4
+- Link demo: http://localhost:3000/Retrieval
 
 # Cách sử dụng
 
